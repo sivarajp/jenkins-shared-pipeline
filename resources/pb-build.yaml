@@ -1,0 +1,8 @@
+source:
+ git:
+   url: ""
+   revision: ""
+build:
+  env: []
+image:
+ tag: ""
