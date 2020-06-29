@@ -29,7 +29,7 @@ def call(body) {
                 javabuild(config)
               } else if  (config.platform  == 'python') {
                 pythonbuild(config)
-              else {
+              } else {
                 genericbuild(config)
               }
           }
