@@ -4,6 +4,7 @@ def call(Map config) {
             echo $GIT_USER 
             echo $GIT_TOKEN
             git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+            git fetch --all
             git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
             git config --global user.email "sivathevan@gmail.com"
             git config --global user.name "Sivaraj"
