@@ -17,6 +17,9 @@ def call(Map config) {
                     config.lastCommitterEmail = utils.getLastCommitterEmail()
                     config.lastCommit = utils.getLastCommit()
                     config.branchName = env.BRANCH_NAME
+                    submodule(config)
+
+
                 }
                 stage ('Test') {
 

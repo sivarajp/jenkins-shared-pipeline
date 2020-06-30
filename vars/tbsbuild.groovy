@@ -48,7 +48,6 @@ def call(Map config) {
                             def latestimage = sh( returnStdout: true,  script: "pb image status ${data.image.tag} | grep \"Latest\" ")
                             config.dockerimage = latestimage.substring(17, latestimage.length()).trim()
                             print config.dockerimage
-
                         }
                     }
                 }
