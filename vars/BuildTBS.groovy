@@ -23,15 +23,7 @@ def call(body) {
         steps {
           script {
               config.doTBSBuild = "true"
-              if (config.platform  == 'go') {
-                gobuild(config)
-              } else if  (config.platform  == 'java') {
-                javabuild(config)
-              } else if  (config.platform  == 'python') {
-                pythonbuild(config)
-              } else {
-                genericbuild(config)
-              }
+              build(config)
           }
         }
       }

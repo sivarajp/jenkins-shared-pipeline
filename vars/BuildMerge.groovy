@@ -27,13 +27,7 @@ def call(body) {
         }
         steps {
           script {
-              if (config.platform  == 'go') {
-                gobuild(config)
-              } else if  (config.platform  == 'java') {
-                javabuild(config)
-              } else {
-                genericbuild(config)
-              }
+              build(config)
           }
         }
       }

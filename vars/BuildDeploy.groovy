@@ -24,13 +24,14 @@ def call(body) {
         steps {
           script {
               config.doDockerBuild = "true"
-              if (config.platform  == 'go') {
-                gobuild(config)
-              } else if  (config.platform  == 'java') {
-                javabuild(config)
-              } else {
-                genericbuild(config)
-              }
+              build(config)
+              // if (config.platform  == 'go') {
+              //   gobuild(config)
+              // } else if  (config.platform  == 'java') {
+              //   javabuild(config)
+              // } else {
+              //   genericbuild(config)
+              // }
           }
         }
       }
