@@ -25,13 +25,6 @@ def call(body) {
           script {
               config.doDockerBuild = "true"
               build(config)
-              // if (config.platform  == 'go') {
-              //   gobuild(config)
-              // } else if  (config.platform  == 'java') {
-              //   javabuild(config)
-              // } else {
-              //   genericbuild(config)
-              // }
           }
         }
       }
