@@ -7,10 +7,10 @@ def call(Map config) {
             git fetch --all --recurse-submodules
             curl https://gist.githubusercontent.com/patdunlavey/dcc36b2085dddc22404f805978c0f11d/raw/903a4cbc23a798244f38ce1fb1414125647ff7ba/git-submodule-flatten.sh -o git-submodule-flatten.sh
             chmod +x git-submodule-flatten.sh 
-            ./git-submodule-flatten.sh temp-$env.BRANCH_NAME 
+            ./git-submodule-flatten.sh temp-test 
             git commit -m "Jenkins sumodule commit"
             git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
-            git push --set-upstream origin temp-$env.BRANCH_NAME 
+            git push --set-upstream origin temp-test
         ''')
     } 
 }
