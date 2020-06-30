@@ -10,7 +10,7 @@ def call(Map config) {
             git config --global user.name "Sivaraj"
             curl https://gist.githubusercontent.com/patdunlavey/dcc36b2085dddc22404f805978c0f11d/raw/903a4cbc23a798244f38ce1fb1414125647ff7ba/git-submodule-flatten.sh -o git-submodule-flatten.sh
             chmod +x git-submodule-flatten.sh 
-            git add git-submodule-flatten.sh
+            git add .
             git commit -m "Jenkins sumodule commit"
             ./git-submodule-flatten.sh temp-test 
             git commit -m "Jenkins sumodule commit"
