@@ -1,6 +1,9 @@
 def call(Map config) {
     withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
         sh('''
+            COMMITMSG="Flatten submodules"
+            FORCE=0
+            REMOVE=0
             echo $GIT_USER 
             echo $GIT_TOKEN
             git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
