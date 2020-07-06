@@ -12,6 +12,7 @@ def call(body) {
       buildDiscarder(logRotator(numToKeepStr:'5')) 
       skipStagesAfterUnstable()
       disableConcurrentBuilds()
+      skipDefaultCheckout() 
     }
     stages {  
       stage ('Set Default values') { 
