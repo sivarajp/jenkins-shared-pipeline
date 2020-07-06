@@ -16,12 +16,7 @@ def call(Map config) {
         node('kube-build-pod') {
             try {
                 stage ('Checkout') {
-                    checkout scm
-                    config.commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    config.repoName = utils.getRepoName()
-                    config.lastCommitterEmail = utils.getLastCommitterEmail()
-                    config.lastCommit = utils.getLastCommit()
-                    config.branchName = env.BRANCH_NAME
+                    gitcheckout(config)
                 }
                 stage ('Build docker image and push') {
                     container ('kaniko') {
