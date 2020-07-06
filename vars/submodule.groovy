@@ -12,21 +12,21 @@ def call(Map config) {
             modules=`git submodule | cut -d" " -f3`
             for module in $modules
             do
-            git rm --cached $module
-            mv $module/.git $module/.git.orig.$$
-            echo git add $module
-            git add $module
+                git rm --cached $module
+                mv $module/.git $module/.git.orig.$$
+                echo git add $module
+                git add $module
             done
-            git rm .gitmodules
+            git rm -r --cached .gitmodules
             git commit -m "$COMMITMSG"
             for module in $modules; do
-            if [ $REMOVE -eq 1 ]; then
-                echo rm -r $module/.git.orig.$$
-                rm -r $module/.git.orig.$$
-            else
-                echo mv $module/.git.orig.$$ $module/.git
-                mv $module/.git.orig.$$ $module/.git
-            fi
+                if [ $REMOVE -eq 1 ]; then
+                    echo rm -r $module/.git.orig.$$
+                    rm -r $module/.git.orig.$$
+                else
+                    echo mv $module/.git.orig.$$ $module/.git
+                    mv $module/.git.orig.$$ $module/.git
+                fi
             done
             git push --set-upstream origin temp-test
         ''')
