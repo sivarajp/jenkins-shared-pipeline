@@ -3,18 +3,32 @@ def call(Map config) {
         sh('''
             echo $GIT_USER 
             echo $GIT_TOKEN
+            echi $env.BRANCH_NAME
             git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
             git fetch --all
             git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
             git config --global user.email "sivathevan@gmail.com"
             git config --global user.name "Sivaraj"
-            curl https://gist.githubusercontent.com/patdunlavey/dcc36b2085dddc22404f805978c0f11d/raw/903a4cbc23a798244f38ce1fb1414125647ff7ba/git-submodule-flatten.sh -o git-submodule-flatten.sh
-            chmod +x git-submodule-flatten.sh 
-            git add .
-            git commit -m "Jenkins sumodule commit"
-            git submodule
-            ./git-submodule-flatten.sh temp-test 
-            git commit -m "Jenkins sumodule commit"
+            git checkout --orphan temp-test || exit
+            modules=`git submodule | cut -d" " -f3`
+            for module in $modules
+            do
+            git rm --cached $module
+            mv $module/.git $module/.git.orig.$$
+            echo git add $module
+            git add $module
+            done
+            git rm .gitmodules
+            git commit -m "$COMMITMSG"
+            for module in $modules; do
+            if [ $REMOVE -eq 1 ]; then
+                echo rm -r $module/.git.orig.$$
+                rm -r $module/.git.orig.$$
+            else
+                echo mv $module/.git.orig.$$ $module/.git
+                mv $module/.git.orig.$$ $module/.git
+            fi
+            done
             git push --set-upstream origin temp-test
         ''')
     } 
