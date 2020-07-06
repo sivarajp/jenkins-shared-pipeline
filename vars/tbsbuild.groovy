@@ -30,14 +30,6 @@ def call(Map config) {
                             sh "mkdir ~/.kube && cp /var/pbs/kube/config ~/.kube/config"
                             sh "kubectl get ns ${config.namespace} || kubectl create ns ${config.namespace}"
                             sh "pb project target ${config.namespace}"
-                            // sh "kubectl config use-context tbs-default-siva-aws-poc --namespace ${config.namespace}"
-                            // withCredentials([file(credentialsId: "${config.namespace}-registry", variable: "registry")]) {
-                            //          sh "pb secrets registry apply -f $registry"
-                            // }
-                            // withCredentials([file(credentialsId: "${config.namespace}-repo", variable: "repo")]) {
-                            //          sh "pb secrets git apply -f  $repo"
-                            // }
-
                             sh "cat ${filename}"
                             sh "pb image apply -f ${filename}"
                             sh "sleep 15"

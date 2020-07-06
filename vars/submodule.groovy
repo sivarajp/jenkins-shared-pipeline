@@ -1,4 +1,8 @@
 def call(Map config) {
+
+    def submodules = sh(script: 'git submodule | cut -d" " -f3', returnStdout: true)
+    println submodules
+
     withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
         sh('''
             COMMITMSG="Flatten submodules"
