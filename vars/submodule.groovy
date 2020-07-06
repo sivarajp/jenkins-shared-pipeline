@@ -12,6 +12,7 @@ def call(Map config) {
             chmod +x git-submodule-flatten.sh 
             git add .
             git commit -m "Jenkins sumodule commit"
+            git submodule
             ./git-submodule-flatten.sh temp-test 
             git commit -m "Jenkins sumodule commit"
             git push --set-upstream origin temp-test
