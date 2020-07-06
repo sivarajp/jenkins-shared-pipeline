@@ -4,7 +4,15 @@ def call(Map config) {
             cloud: 'kubernetes',
             inheritFrom: 'default',
             namespace: 'jenkins',
-            serviceAccount: 'jenkins'
+            containers: [
+                    containerTemplate(name: 'kaniko', image: 'mgit/base:kaniko-executor-debug-stable', ttyEnabled: true, command: 'cat'),
+
+            ],
+            volumes: [
+                    secretVolume(mountPath: '/kaniko/.docker/', secretName: 'kaniko-secret'),
+            ],
+            serviceAccount: 'jenkins',
+            runAsUser: 'jenkins'
     ) 
     
     {
