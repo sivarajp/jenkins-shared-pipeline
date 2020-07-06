@@ -3,7 +3,6 @@ def call(Map config) {
         sh('''
             echo $GIT_USER 
             echo $GIT_TOKEN
-            echi $env.BRANCH_NAME
             git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
             git fetch --all
             git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
