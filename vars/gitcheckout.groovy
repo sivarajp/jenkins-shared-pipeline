@@ -1,10 +1,9 @@
-def call() {
-    utils.emptyDir()
-    def commit = checkout scm
-    if (commit.GIT_COMMIT != null) {
-        env.GIT_COMMIT = commit.GIT_COMMIT.substring(0, 7)
-    } else {
-        env.GIT_COMMIT = "";
-    }
+def call(Map config) {
+    checkout scm
+    config.commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+    config.repoName = utils.getRepoName()
+    config.lastCommitterEmail = utils.getLastCommitterEmail()
+    config.lastCommit = utils.getLastCommit()
+    config.branchName = env.BRANCH_NAME
 }
 

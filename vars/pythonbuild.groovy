@@ -11,15 +11,7 @@ def call(Map config) {
         node('kube-generic-build-pod') {
             try {
                 stage ('Extract') {
-                    checkout scm
-                    config.commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    config.repoName = utils.getRepoName()
-                    config.lastCommitterEmail = utils.getLastCommitterEmail()
-                    config.lastCommit = utils.getLastCommit()
-                    config.branchName = env.BRANCH_NAME
-                    submodule(config)
-
-
+                    gitcheckout(config)
                 }
                 stage ('Test') {
 
