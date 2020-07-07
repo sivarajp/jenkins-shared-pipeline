@@ -28,8 +28,8 @@ def call(Map config) {
                 if (config.doDockerBuild == 'true') {
                     stage ('Docker build and push')   {
                         container ('kaniko') {
-                            sh "executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=sivarajp/${config.repoName}:${config.commitId}" 
-                            config.dockerimage = "sivarajp/${config.repoName}:${config.commitId}"
+                            sh "executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=${config.registry}/${config.repoName}:${config.commitId}" 
+                            config.dockerimage = "${config.registry}/${config.repoName}:${config.commitId}"
                         }
                     }
                 }

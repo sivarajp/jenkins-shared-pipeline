@@ -25,7 +25,7 @@ def call(Map config) {
                             def repoName = utils.getRepoName()
                             data.source.git.url = env.GIT_URL
                             data.source.git.revision = env.GIT_COMMIT
-                            data.image.tag = "index.docker.io/sivarajp/${repoName}"
+                            data.image.tag = "${config.registry}/${repoName}"
                             writeYaml file: filename, data: data
                             sh "mkdir ~/.kube && cp /var/pbs/kube/config ~/.kube/config"
                             sh "kubectl get ns ${config.namespace} || kubectl create ns ${config.namespace}"
