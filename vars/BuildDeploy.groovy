@@ -33,8 +33,10 @@ def call(body) {
       stage ('Deploy to DEV kubernetes'){
          steps {
             echo 'Deploy to kubernetes dev' 
-            config.environment = "dev"
-            deployKube(config)
+            script {
+              config.environment = "dev"
+              deployKube(config)
+            }
          }
       }
 
