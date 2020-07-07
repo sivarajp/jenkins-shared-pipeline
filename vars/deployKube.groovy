@@ -4,7 +4,6 @@ def call(Map config) {
     config.repoName = utils.getRepoName()
     config.deployName=utils.getDeployName(config.repoName)
     config.urlContextPath = "/services/${config.deployName}"
-    config.environment = "dev"
     config.ingNameSuffix = "int"
 
     if (!config.appContext?.trim()) {
