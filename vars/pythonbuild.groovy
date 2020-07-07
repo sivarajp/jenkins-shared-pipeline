@@ -4,7 +4,15 @@ def call(Map config) {
             cloud: 'kubernetes',
             inheritFrom: 'default',
             namespace: 'jenkins',
-            serviceAccount: 'jenkins'
+            containers: [
+                    containerTemplate(name: 'kaniko', image: 'mgit/base:kaniko-executor-debug-stable', ttyEnabled: true, command: 'cat'),
+
+            ],
+            volumes: [
+                    secretVolume(mountPath: '/kaniko/.docker/', secretName: 'kaniko-secret'),
+            ],
+            serviceAccount: 'jenkins',
+            runAsUser: 'jenkins'
     ) 
     
     {
@@ -20,8 +28,8 @@ def call(Map config) {
                 if (config.doDockerBuild == 'true') {
                     stage ('Docker build and push')   {
                         container ('kaniko') {
-                            sh "executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=sivarajp/${config.repoName}:${config.commitId}" 
-                            config.dockerimage = "sivarajp/${config.repoName}:${config.commitId}"
+                            sh "executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=${config.registry}/${config.repoName}:${config.commitId}" 
+                            config.dockerimage = "${config.registry}/${config.repoName}:${config.commitId}"
                         }
                     }
                 }

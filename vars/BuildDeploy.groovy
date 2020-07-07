@@ -12,6 +12,7 @@ def call(body) {
       buildDiscarder(logRotator(numToKeepStr:'5')) 
       skipStagesAfterUnstable()
       disableConcurrentBuilds()
+      skipDefaultCheckout() 
     }
     stages {  
       stage ('Set Default values') { 
@@ -29,10 +30,25 @@ def call(body) {
         }
       }
 
-      stage ('Deploy to kubernetes'){
+      stage ('Deploy to DEV kubernetes'){
          steps {
-            echo 'Deploy to kubernetes' 
-            deployKube(config)
+            echo 'Deploy to kubernetes dev' 
+            script {
+              config.environment = "dev"
+              deployKube(config)
+            }
+         }
+      }
+
+      stage ('Deploy to Prod kubernetes'){
+         steps {
+            input (id: "Proceed", message: "Are you sure you wish to deploy this in production?")
+            echo 'Deploy to kubernetes prod' 
+            script {
+              config.environment = "prod"
+              config.namespace = config.namespace + "-prod"
+              deployKube(config)
+            }
          }
       }
     }
