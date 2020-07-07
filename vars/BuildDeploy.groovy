@@ -30,9 +30,18 @@ def call(body) {
         }
       }
 
-      stage ('Deploy to kubernetes'){
+      stage ('Deploy to DEV kubernetes'){
          steps {
             echo 'Deploy to kubernetes' 
+            deployKube(config)
+         }
+      }
+
+      stage ('Deploy to Prod kubernetes'){
+         steps {
+            input (id: "Proceed", message: "Are you sure you wish to deploy this in production?")
+            echo 'Deploy to kubernetes' 
+            config.namespace = config.namespace + "-prod"
             deployKube(config)
          }
       }
