@@ -3,7 +3,7 @@ def call(Map config) {
             label: 'kube-java-build-pod',
             cloud: 'kubernetes',
             inheritFrom: 'default',
-            namespace: 'jenkins-builds',
+            namespace: 'jenkins',
             containers: [
                     containerTemplate(name: 'maven', image: 'maven:3.5.4-jdk-8-alpine', runAsUser: 'jenkins', ttyEnabled: true, command: 'cat'),
                     containerTemplate(name: 'kaniko', image: 'mgit/base:kaniko-executor-debug-stable', ttyEnabled: true, command: 'cat'),
