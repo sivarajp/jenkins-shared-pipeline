@@ -2,7 +2,11 @@ def call(Map config) {
     if (config.platform  == 'go') {
         gobuild(config)
     } else if  (config.platform  == 'java') {
-        javabuild(config)
+        if (config.build == 'gradle') {
+            javabuildgradle(config)
+        } else {
+            javabuild(config)
+        }
     } else if  (config.platform  == 'python') {
         pythonbuild(config)
     } else {
