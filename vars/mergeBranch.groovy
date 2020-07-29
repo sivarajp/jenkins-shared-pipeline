@@ -1,6 +1,7 @@
 def call(Map config) {
     withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
         sh('''
+            printenv
             echo $GIT_USER 
             echo $GIT_TOKEN
             git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
