@@ -11,6 +11,7 @@ def call(Map config) {
             git checkout master
             git merge temp
             git branch -d temp
+            git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
             #git fetch --no-tags --force --progress -- $GIT_URL +refs/heads/*:refs/remotes/origin/*
             git push
         ''')

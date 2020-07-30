@@ -19,18 +19,18 @@ def call(body) {
         }
       }
 
-      stage ('Build'){
-        when {
-            expression {
-                return env.BRANCH_NAME != 'master';
-            }
-        }
-        steps {
-          script {
-              build(config)
-          }
-        }
-      }
+      // stage ('Build'){
+      //   when {
+      //       expression {
+      //           return env.BRANCH_NAME != 'master';
+      //       }
+      //   }
+      //   steps {
+      //     script {
+      //         build(config)
+      //     }
+      //   }
+      // }
 
       stage ('Merge branch to master request'){
           steps {
