@@ -24,6 +24,8 @@ def call(Map config) {
                     // container ('go') {
                     //     sh 'go version'
                     // }
+                    sh 'ls -R'
+                     sh 'pwd'
                     container ('dind') {
                         sh 'docker build -t dind-test .'
                     }
