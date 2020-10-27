@@ -16,6 +16,8 @@ def call(Map config) {
             try {
                 stage ('Checkout') {
                     gitcheckout(config)
+                     sh 'ls -R'
+                     sh 'pwd'
                 }
 
                 stage ('Build') {

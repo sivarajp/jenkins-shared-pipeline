@@ -6,6 +6,5 @@ def call(Map config) {
     config.lastCommit = utils.getLastCommit()
     config.branchName = env.BRANCH_NAME
     //sh 'git submodule update --init --recursive'
-    sh 'ls -R'
 }
 
