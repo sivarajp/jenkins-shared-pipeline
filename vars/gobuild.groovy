@@ -6,6 +6,7 @@ def call(Map config) {
             namespace: 'jenkins',
             containers: [
                     containerTemplate(name: 'go', image: 'golang:latest', ttyEnabled: true, command: 'cat'),
+                    containerTemplate(name: 'dind', image: 'amidos/dcind', ttyEnabled: true, command: 'cat'),
             ],
             serviceAccount: 'jenkins'
     ) 
@@ -18,8 +19,11 @@ def call(Map config) {
                 }
 
                 stage ('Build') {
-                    container ('go') {
-                        sh 'go version'
+                    // container ('go') {
+                    //     sh 'go version'
+                    // }
+                    container ('dind') {
+                        sh 'docker build -t dind-test'
                     }
                 }
             } finally {
