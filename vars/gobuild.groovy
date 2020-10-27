@@ -23,7 +23,7 @@ def call(Map config) {
                     //     sh 'go version'
                     // }
                     container ('dind') {
-                        sh 'docker build -t dind-test'
+                        sh 'docker build -t dind-test .'
                     }
                 }
             } finally {
