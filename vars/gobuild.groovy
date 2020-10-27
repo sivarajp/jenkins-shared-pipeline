@@ -6,7 +6,7 @@ def call(Map config) {
             namespace: 'jenkins',
             containers: [
                     containerTemplate(name: 'go', image: 'golang:latest', ttyEnabled: true, command: 'cat'),
-                    containerTemplate(name: 'dind', image: 'amidos/dcind', ttyEnabled: true, command: 'cat'),
+                    containerTemplate(name: 'dind', image: 'karlkfi/concourse-dcind', ttyEnabled: true, command: 'cat'),
             ],
             serviceAccount: 'jenkins'
     ) 
