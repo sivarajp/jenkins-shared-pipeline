@@ -34,5 +34,3 @@ def call(Map config) {
 //             #git fetch --no-tags --force --progress -- $GIT_URL +refs/heads/*:refs/remotes/origin/*
 //             git push
 
-
-//https://sivarajp:1644ef49733d32cac9c263889938a5e859a4f0fb@github.com/sivarajp/tanzu-bank-cd
