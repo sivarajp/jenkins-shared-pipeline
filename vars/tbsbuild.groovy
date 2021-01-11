@@ -27,13 +27,13 @@ def call(Map config) {
                                 kp image trigger ${config.repoName} -n acme-builds
 
                                     
-                                while [ "kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs" -ne Ready ]
+                                while [ " kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs " -ne "Ready" ]
                                 do
                                     sleep 10
                                 done
-
-                                DOCKER_IMAGE = 'kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d":" -f2 | xargs'
                             """
+                            DOCKER_IMAGE = sh(script: "kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d':' -f2 | xargs ", returnStdout: true).trim()
+                            
                         }
                     }
                 }
