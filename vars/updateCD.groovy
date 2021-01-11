@@ -12,6 +12,7 @@ def call(Map config) {
         touch siva.txt
         git add .
         git commit -m "siva"
+        git push --set-upstream origin master
         git push
         """
 
