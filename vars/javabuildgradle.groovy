@@ -5,10 +5,10 @@ def call(Map config) {
             inheritFrom: 'default',
             namespace: 'jenkins',
             containers: [
-                    containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat')
+                    containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat'),
             ],
             volumes: [
-                    hostPathVolume(hostPath: '/root/.m2', mountPath: '/root/.m2')
+                    secretVolume(mountPath: '/kaniko/.docker/', secretName: 'kaniko-secret'),
             ],
             serviceAccount: 'jenkins',
             runAsUser: 'jenkins'
@@ -67,7 +67,7 @@ def call(Map config) {
 
                 if (config.doTBSBuild == 'true') {
                     stage ('TBS Docker build and push')   {
-                       // tbsbuild(config)
+                        tbsbuild(config)
                     }
                 }
             } finally {

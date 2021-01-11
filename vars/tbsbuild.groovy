@@ -6,10 +6,10 @@ def call(Map config) {
             inheritFrom: 'default',
             namespace: 'jenkins',
             containers: [
-                    containerTemplate(name: 'pb', image: 'sivarajp/pb', ttyEnabled: true, command: 'cat', alwaysPullImage: 'true'),
+                    containerTemplate(name: 'kp', image: 'sivarajp/kp', ttyEnabled: true, command: 'cat', alwaysPullImage: 'true')
             ],
             volumes: [
-                    secretVolume(mountPath: '/var/pbs/kube', secretName: 'pbconfig')
+                    secretVolume(mountPath: '/var/kp/kube', secretName: 'kubeconfig')
             ],
             serviceAccount: 'jenkins'
     ) 
@@ -17,29 +17,10 @@ def call(Map config) {
     {
         node('kube-pbs-build-pod') {
             try {
-                stage ('Docker build and push')   {
-                    container ('pb') {
-                        def filename = 'pb-build.yaml'
+                stage ('TBS build and push')   {
+                    container ('kp') {
                         script {
-                            def data = readYaml(text: libraryResource(filename))
-                            def repoName = utils.getRepoName()
-                            data.source.git.url = env.GIT_URL
-                            data.source.git.revision = env.GIT_COMMIT
-                            data.image.tag = "${config.registry}/${repoName}"
-                            writeYaml file: filename, data: data
-                            sh "mkdir ~/.kube && cp /var/pbs/kube/config ~/.kube/config"
-                            sh "kubectl get ns ${config.namespace} || kubectl create ns ${config.namespace}"
-                            sh "pb project target ${config.namespace}"
-                            sh "cat ${filename}"
-                            sh "pb image apply -f ${filename}"
-                            sh "sleep 15"
-                            def lastBuildNumber = sh( returnStdout: true,  script:  """ pb image builds ${data.image.tag} | tail -2 | head  -1 | awk '{ print \$1}' """)
-                            lastBuildNumber = lastBuildNumber.trim()
-                            sh "pb image logs ${data.image.tag} -b ${lastBuildNumber} -f"
-                            sh "sleep 15"
-                            def latestimage = sh( returnStdout: true,  script: "pb image status ${data.image.tag} | grep \"Latest\" ")
-                            config.dockerimage = latestimage.substring(17, latestimage.length()).trim()
-                            print config.dockerimage
+                            sh "export KUBECONFIG=/var/kp/kube/config && kp image list &&  kp image trigger ${config.repoName}"
                         }
                     }
                 }
