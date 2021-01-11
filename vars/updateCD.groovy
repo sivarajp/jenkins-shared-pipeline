@@ -17,7 +17,7 @@ def call(Map configmap) {
                     
                     var=\$(echo ${configmap.dockerimage} | sed 's/\//\\\//g')
                     echo $var
-                    sed -i "/^\\([[:space:]]*image: \\).*/s//\\1${var}/"  ./${configmap.repoName}/${configmap.repoName}.yml
+                    sed -i "/^\\([[:space:]]*image: \\).*/s//\\1${configmap.dockerimage}/"  ./${configmap.repoName}/${configmap.repoName}.yml
                 """
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
                     sh """
