@@ -36,7 +36,7 @@ def call(Map config) {
                             """
                             def DOCKERIMG = sh(script: "export KUBECONFIG=/var/kp/kube/config  && kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d':' -f2,3 | xargs ", returnStdout: true).trim()
                             println DOCKERIMG
-                            config.dockerimage = $DOCKERIMG
+                            config.dockerimage = DOCKERIMG
                         }
                     }
                 }
