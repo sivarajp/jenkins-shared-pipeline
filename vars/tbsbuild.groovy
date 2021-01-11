@@ -34,8 +34,9 @@ def call(Map config) {
                                     X=\$( kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs )
                                 done
                             """
-                            def DOCKERIMG = sh(script: "export KUBECONFIG=/var/kp/kube/config  && kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d':' -f2 | xargs ", returnStdout: true).trim()
+                            def DOCKERIMG = sh(script: "export KUBECONFIG=/var/kp/kube/config  && kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d':' -f2,3 | xargs ", returnStdout: true).trim()
                             println DOCKERIMG
+                            config.dockerimage = $DOCKERIMG
                         }
                     }
                 }
@@ -44,7 +45,7 @@ def call(Map config) {
                // cleanWs()
             }
         }
-        echo $DOCKER_IMAGE
+        echo ${config.dockerimage}
     }
 }
 
