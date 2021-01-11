@@ -20,7 +20,7 @@ def call(Map config) {
 
                 stage ('Test') {
                     container ('gradle') {
-                        sh 'gradle test'
+                        sh 'gradle test --no-daemon'
                         // sh 'chmod -R 777 $WORKSPACE/target'
                         // stash includes: '**', name: 'source'
                         // stash includes: '**/target/jacoco.exec', name: 'unitCodeCoverage'
