@@ -54,10 +54,3 @@ def call(Map configmap) {
 
 
 //
-
-
-
-yq -y '(.spec.containers[].env[]|select(.name == "${configmap.reponame}").value)|="${configmap.dockerimage}"' yaml  
-
-
-yq -y '(.spec.containers[0]|select(.name == "user-service").value)|="user-service"' yaml  
