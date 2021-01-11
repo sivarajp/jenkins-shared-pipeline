@@ -25,13 +25,23 @@ def call(Map config) {
                                 export KUBECONFIG=/var/kp/kube/config 
                                 kp image list -n acme-builds
                                 kp image trigger ${config.repoName} -n acme-builds
+
+                                while [ 'kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d":" -f2 | xargs' -ne 'Ready' ]
+                                do
+                                sleep 10
+                                done
+
+                                DOCKER_IMAGE = 'kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d":" -f2 | xargs'
                             """
                         }
                     }
                 }
+                echo $DOCKER_IMAGE
             } finally {
                // cleanWs()
             }
         }
     }
 }
+
+while [ 'kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d":" -f2 | xargs' -ne 'Ready' ]
