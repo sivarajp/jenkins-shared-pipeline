@@ -21,12 +21,11 @@ def call(Map config) {
                 stage ('TBS build and push')   {
                     container ('kp') {
                         script {
-                            sh '''
-                              export KUBECONFIG=/var/kp/kube/config 
-                              kp image list -n acme-builds 
-                              kp image trigger ${config.repoName} -n acme-build
-                            '''
-                            
+                            sh """
+                                export KUBECONFIG=/var/kp/kube/config 
+                                kp image list -n acme-builds
+                                kp image trigger ${config.repoName} -n acme-builds
+                            """
                         }
                     }
                 }
