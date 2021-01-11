@@ -5,10 +5,10 @@ def call(Map config) {
             inheritFrom: 'default',
             namespace: 'jenkins-builds',
             containers: [
-                    containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat'),
+                    containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat')
             ],
             volumes: [
-                    hostPathVolume(hostPath: '/root/.m2', mountPath: '/root/.m2'),
+                    hostPathVolume(hostPath: '/root/.m2', mountPath: '/root/.m2')
             ],
             serviceAccount: 'jenkins',
             runAsUser: 'jenkins'
