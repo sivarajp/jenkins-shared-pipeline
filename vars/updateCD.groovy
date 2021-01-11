@@ -13,7 +13,6 @@ def call(Map config) {
         git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
         git config --global user.name $GIT_USER
         git config --global user.password $GIT_TOKEN
-        rm siva.txt
         echo ${config.reponame}
         cd ${config.reponame}
         sed -i "/\^\([[:space:]]*image: \).*/s//\1${config.dockerimage}/" ${config.reponame}.yml
