@@ -7,9 +7,6 @@ def call(Map config) {
             containers: [
                     containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat'),
             ],
-            volumes: [
-                    secretVolume(mountPath: '/kaniko/.docker/', secretName: 'kaniko-secret'),
-            ],
             serviceAccount: 'jenkins',
             runAsUser: 'jenkins'
     ) 
