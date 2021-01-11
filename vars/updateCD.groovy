@@ -1,19 +1,26 @@
 def call(Map config) {
-    withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
-        sh('''
-            printenv
-            echo 
-            echo $GIT_TOKEN
-            git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
-            git config --global user.name $GIT_USER
-            git config --global user.password $GIT_TOKEN
-            dir('/tmp') {
-                git clone https://$GIT_USER:$GIT_TOKEN@github.com/$GIT_USER/tanzu-bank-cd
-            }
-            cd ${config.reponame}
-            ls -lrt
-        ''')
-    } 
+
+    git(
+       url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
+       credentialsId: 'github-credentials',
+       branch: "master"
+    )
+
+    // withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
+    //     sh('''
+    //         printenv
+    //         echo 
+    //         echo $GIT_TOKEN
+    //         git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
+    //         git config --global user.name $GIT_USER
+    //         git config --global user.password $GIT_TOKEN
+    //         dir('/tmp') {
+    //             git clone https://$GIT_USER:$GIT_TOKEN@github.com/$GIT_USER/tanzu-bank-cd
+    //         }
+    //         cd ${config.reponame}
+    //         ls -lrt
+    //     ''')
+    // } 
 }
 
 // git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
