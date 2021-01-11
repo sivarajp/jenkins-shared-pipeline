@@ -1,5 +1,5 @@
 def call(Map configmap) {
-    printenv configmap
+    println configmap
     // git(
     //    url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
     //    credentialsId: 'github-credentials',
