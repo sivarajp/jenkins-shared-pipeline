@@ -27,6 +27,12 @@ def call(body) {
           }
         }
       }
+
+      stage ('Update Docker image'){
+          steps {
+              updateCD(config)
+          }
+      }
     }
     
 
