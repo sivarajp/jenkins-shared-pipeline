@@ -14,9 +14,9 @@ def call(Map config) {
     {
         node('kube-java-build-pod') {
             try {
-                // stage ('Checkout') {
-                //     gitcheckout(config)
-                // }
+                stage ('Checkout') {
+                    gitcheckout(config)
+                }
 
                 // stage ('Test') {
                 //     container ('gradle') {
