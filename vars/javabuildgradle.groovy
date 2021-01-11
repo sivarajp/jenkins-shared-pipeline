@@ -3,13 +3,11 @@ def call(Map config) {
             label: 'kube-java-build-pod',
             cloud: 'kubernetes',
             inheritFrom: 'default',
-            namespace: 'jenkins',
+            namespace: 'jenkins-builds',
             containers: [
                     containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat'),
-                    containerTemplate(name: 'kaniko', image: 'mgit/base:kaniko-executor-debug-stable', ttyEnabled: true, command: 'cat'),
             ],
             volumes: [
-                    secretVolume(mountPath: '/kaniko/.docker/', secretName: 'kaniko-secret'),
                     hostPathVolume(hostPath: '/root/.m2', mountPath: '/root/.m2'),
             ],
             serviceAccount: 'jenkins',
@@ -69,7 +67,7 @@ def call(Map config) {
 
                 if (config.doTBSBuild == 'true') {
                     stage ('TBS Docker build and push')   {
-                        tbsbuild(config)
+                       // tbsbuild(config)
                     }
                 }
             } finally {
