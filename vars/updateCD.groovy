@@ -1,11 +1,13 @@
 def call(Map config) {
 
-    git(
-       url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
-       credentialsId: 'github-credentials',
-       branch: "master"
-    )
+    // git(
+    //    url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
+    //    credentialsId: 'github-credentials',
+    //    branch: "master"
+    // )
 
+    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])
+    
     // withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
     //     sh('''
     //         printenv
@@ -34,3 +36,5 @@ def call(Map config) {
 //             #git fetch --no-tags --force --progress -- $GIT_URL +refs/heads/*:refs/remotes/origin/*
 //             git push
 
+
+//
