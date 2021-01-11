@@ -45,7 +45,7 @@ def call(Map config) {
                // cleanWs()
             }
         }
-        echo ${config.dockerimage}
+        println config.dockerimage
     }
 }
 
