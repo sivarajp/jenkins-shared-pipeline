@@ -16,7 +16,7 @@ def call(Map config) {
         rm siva.txt
         echo ${config.reponame}
         cd ${config.reponame}
-        sed -i "/^\([[:space:]]*image: \).*/s//\1${config.dockerimage}/" ${config.reponame}.yml
+        sed -i "/\^\([[:space:]]*image: \).*/s//\1${config.dockerimage}/" ${config.reponame}.yml
         rm -f *.bak
         git add .
         git commit -m "siva"
