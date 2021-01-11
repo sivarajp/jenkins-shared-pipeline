@@ -2,10 +2,11 @@ def call(Map config) {
     withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
         sh('''
             printenv
-            echo $GIT_USER 
+            echo 
             echo $GIT_TOKEN
+            git remote add origin https://$GIT_USER:$GIT_TOKEN@github.com/$GIT_USER/project.git
             git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
-            git clone https://github.com/sivarajp/tanzu-bank-cd
+            git clone https://github.com/$GIT_USER/tanzu-bank-cd
             cd ${config.reponame}
             ls -lrt
         ''')
