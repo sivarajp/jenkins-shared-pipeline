@@ -15,10 +15,9 @@ def call(Map config) {
         git config --global user.password $GIT_TOKEN
         echo ${config.reponame}
         cd ${config.reponame}
-        sed -i "/\^\([[:space:]]*image: \).*/s//\1${config.dockerimage}/" ${config.reponame}.yml
-        rm -f *.bak
+        yq w ${config.reponame}.yaml "spec.containers[0].image.value" ${config.reponame}
         git add .
-        git commit -m "siva"
+        git commit -m "pipeline commit"
         git push --set-upstream origin master
         git push
         """
