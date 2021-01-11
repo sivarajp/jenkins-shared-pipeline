@@ -14,7 +14,7 @@ def call(Map configmap) {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: 'master']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        
                 sh """
                     ls -lrt 
-                    tempvar=\$(echo ${configmap.dockerimage}  | sed "s#/#\\\\\\/#g")
+                    export tempvar=\$(echo ${configmap.dockerimage}  | sed "s#/#\\\\\\/#g")
                     echo $tempvar
                     sed -i "/^\\([[:space:]]*image: \\).*/s//\\1$tempvar/"  ./${configmap.repoName}/${configmap.repoName}.yml
                 """
