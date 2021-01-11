@@ -9,7 +9,7 @@ def call(Map configmap) {
 
 
 
-        def DOCKERIMG = sh(script: echo ${configmap.dockerimage}  | sed "s#/#\\\\\\/#g", returnStdout: true).trim()
+        def DOCKERIMG = sh(script: "echo ${configmap.dockerimage}  | sed 's#/#\\\\\\/#g'", returnStdout: true).trim()
         println DOCKERIMG
         script {
             dir("$HOME/tanzu-bank-cd") {
