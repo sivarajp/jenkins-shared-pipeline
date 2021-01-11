@@ -3,7 +3,7 @@ def call(Map config) {
             label: 'kube-java-build-pod',
             cloud: 'kubernetes',
             inheritFrom: 'default',
-            namespace: 'jenkins-builds',
+            namespace: 'jenkins',
             containers: [
                     containerTemplate(name: 'gradle', image: 'gradle:latest', ttyEnabled: true, command: 'cat')
             ],
