@@ -34,15 +34,16 @@ def call(Map config) {
                                 done
                             """
                             DOCKER_IMAGE = sh(script: "export KUBECONFIG=/var/kp/kube/config  && kp image status  ${config.repoName} -n acme-builds | grep LatestImage  | cut -d':' -f2 | xargs ", returnStdout: true).trim()
-                            
+                            echo $DOCKER_IMAGE
                         }
                     }
                 }
-                echo $DOCKER_IMAGE
+                
             } finally {
                // cleanWs()
             }
         }
+        echo $DOCKER_IMAGE
     }
 }
 
