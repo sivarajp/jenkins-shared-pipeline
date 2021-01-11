@@ -5,10 +5,9 @@ def call(Map config) {
     //    credentialsId: 'github-credentials',
     //    branch: "master"
     // )    
-    sh "mkdir $HOME/tanzu-bank-cd"
+
     dir("$HOME/tanzu-bank-cd") {
-checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: false, reference: '', shallow: false]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        sh """
-        touch siva.txt
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: 'master']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        touch siva.txt
         git add .
         git commit -m "siva"
         git push
