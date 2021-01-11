@@ -45,4 +45,3 @@ def call(Map config) {
     }
 }
 
-while [ 'kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d":" -f2 | xargs' -ne 'Ready' ]
