@@ -6,8 +6,15 @@ def call(Map config) {
     //    branch: "master"
     // )
 
-    dir("$HOME/") {
+    dir("/home/jenkins/agent/workspace/tanzu-bank-cd") {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])
+        sh """
+        touch siva.txt
+        git add .
+        git commit -m "siva"
+        git push
+        """
+
     }
     // withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
     //     sh('''
