@@ -11,7 +11,7 @@ def call(Map configmap) {
             dir("$HOME/tanzu-bank-cd") {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: 'master']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        
                 sh """
-                    sed -i "" "/^\([[:space:]]*image: \).*/s//\${config.dockerimage}/" ${config.reponame}.yml
+                    sed -i "" "/^\\([[:space:]]*image: \\).*/s//\${config.dockerimage}/" ${config.reponame}.yml
                 """
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
                     sh """
