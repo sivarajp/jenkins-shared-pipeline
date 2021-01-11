@@ -18,15 +18,15 @@ def call(Map config) {
                     gitcheckout(config)
                 }
 
-                stage ('Test') {
-                    container ('gradle') {
-                        sh 'gradle test --no-daemon'
-                        // sh 'chmod -R 777 $WORKSPACE/target'
-                        // stash includes: '**', name: 'source'
-                        // stash includes: '**/target/jacoco.exec', name: 'unitCodeCoverage'
-                        // stash includes: '**/target/surefire-reports/*.xml', name: 'surefire'
-                    }
-                }
+                // stage ('Test') {
+                //     container ('gradle') {
+                //         sh 'gradle test --no-daemon'
+                //         // sh 'chmod -R 777 $WORKSPACE/target'
+                //         // stash includes: '**', name: 'source'
+                //         // stash includes: '**/target/jacoco.exec', name: 'unitCodeCoverage'
+                //         // stash includes: '**/target/surefire-reports/*.xml', name: 'surefire'
+                //     }
+                // }
                 // stage("JoCoCo Code Scan") {
                 //     sh 'mkdir $WORKSPACE/output'
                 //     parallel(
