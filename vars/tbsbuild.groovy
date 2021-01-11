@@ -1,3 +1,4 @@
+def DOCKER_IMAGE // Global Variable
 
 def call(Map config) {
     podTemplate(
@@ -20,7 +21,9 @@ def call(Map config) {
                 stage ('TBS build and push')   {
                     container ('kp') {
                         script {
-                            sh "export KUBECONFIG=/var/kp/kube/config && kp image list -n acme-builds &&  kp image trigger ${config.repoName} -n acme-builds"
+                           export KUBECONFIG='/var/kp/kube/config'
+                           kp image list -n acme-builds 
+                           kp image trigger ${config.repoName} -n acme-builds
                         }
                     }
                 }
