@@ -8,15 +8,14 @@ def call(Map configmap) {
 
 
 
-        configmap.dockerimage = configmap.dockerimage.replaceAll("/", "\\/")
         println configmap.dockerimage
         script {
             dir("$HOME/tanzu-bank-cd") {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: 'master']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        
                 sh """
                     ls -lrt 
-                    echo ${configmap.dockerimage}
-                    sed -i "/^\\([[:space:]]*image: \\).*/s//\\1${configmap.dockerimage}/"  ./${configmap.repoName}/${configmap.repoName}.yml
+                    tempvar="(print - "$configmap.dockerimage" | sed 's/\//\\\//g')"
+                    sed -i "/^\\([[:space:]]*image: \\).*/s//\\1${tempvar}/"  ./${configmap.repoName}/${configmap.repoName}.yml
                 """
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
                     sh """
