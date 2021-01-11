@@ -4,9 +4,9 @@ def call(Map config) {
     //    url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
     //    credentialsId: 'github-credentials',
     //    branch: "master"
-    // )
-
-    dir("/home/jenkins/agent/workspace/tanzu-bank-cd") {
+    // )    
+    sh "mkdir $HOME/tanzu-bank-cd"
+    dir("$HOME/tanzu-bank-cd") {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])
         sh """
         touch siva.txt
