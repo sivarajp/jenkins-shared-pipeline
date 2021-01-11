@@ -1,4 +1,4 @@
-def call(Map config) {
+def call(Map configmap) {
 
     // git(
     //    url: 'https://github.com/sivarajp/tanzu-bank-cd.git',
@@ -13,9 +13,9 @@ def call(Map config) {
         git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
         git config --global user.name $GIT_USER
         git config --global user.password $GIT_TOKEN
-        echo ${config.reponame}
-        cd ${config.reponame}
-        yq w ${config.reponame}.yaml "spec.containers[0].image.value" ${config.reponame}
+        echo ${configmap.reponame}
+        cd ${configmap.reponame}
+        yq w ${configmap.reponame}.yaml "spec.containers[0].image.value" ${configmap.reponame}
         git add .
         git commit -m "pipeline commit"
         git push --set-upstream origin master
