@@ -27,7 +27,7 @@ def call(Map config) {
                                 kp image trigger ${config.repoName} -n acme-builds
 
                                     
-                                while [ " kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs " != "Ready" ]
+                                while [ " kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs " != Ready ]
                                 do
                                     sleep 10
                                 done
