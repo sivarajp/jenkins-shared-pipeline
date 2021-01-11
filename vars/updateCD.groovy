@@ -5,7 +5,8 @@ def call(Map config) {
     //    credentialsId: 'github-credentials',
     //    branch: "master"
     // )
-    dir("/tmp") {
+
+    dir("$HOME/") {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])
     }
     // withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
