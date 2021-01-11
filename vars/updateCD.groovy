@@ -1,5 +1,5 @@
 def call(Map configmap) {
-    
+
         def DOCKERIMG = sh(script: "echo ${configmap.dockerimage}  | sed 's#/#\\\\\\/#g'", returnStdout: true).trim()
         script {
             dir("$HOME/tanzu-bank-cd") {
@@ -11,13 +11,12 @@ def call(Map configmap) {
                 """
                 withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN',)]) {
                     sh """
-                    git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
-                    git config --global user.name $GIT_USER
-                    git config --global user.password $GIT_TOKEN
-                    git add .
-                    git commit -m "pipeline commit"
-                    git push --set-upstream origin master
-                    git push
+                        git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
+                        git config --global user.name $GIT_USER
+                        git config --global user.password $GIT_TOKEN
+                        echo `git add -A && git commit -m "pipeline commit"`
+                        git push --set-upstream origin master
+                        echo `git push`
                     """
                 }
         }
