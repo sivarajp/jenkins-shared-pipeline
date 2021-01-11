@@ -8,7 +8,8 @@ def call(Map configmap) {
 
 
 
-        configmap.dockerimage = "harbor.kubeeight.com\\/ecommerce\\/user-service@sha256:df0d8e46d88be25958c33d4291d7f0ba44a6fb58de02d479a41701f399908107"
+        configmap.dockerimage = configmap.dockerimage.replaceAll("/", "\\/")
+        println configmap.dockerimage
         script {
             dir("$HOME/tanzu-bank-cd") {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: 'master']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: 'https://github.com/sivarajp/tanzu-bank-cd']]])        
