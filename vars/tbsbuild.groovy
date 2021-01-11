@@ -24,9 +24,8 @@ def call(Map config) {
                             sh """
                                 export KUBECONFIG=/var/kp/kube/config 
                                 kp image list -n acme-builds
-
-
-
+                                kp image trigger ${config.repoName} -n acme-builds
+                                sleep 30
                                 X=\$( kp image status  ${config.repoName} -n acme-builds | grep Status  | cut -d':' -f2 | xargs )
                                 while [ "\$X" != "Ready" ]
                                 do
@@ -48,7 +47,4 @@ def call(Map config) {
         println config.dockerimage
     }
 }
-
-//kp image trigger ${config.repoName} -n acme-builds
-// sleep 30
 
