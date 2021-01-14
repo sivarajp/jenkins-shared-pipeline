@@ -14,7 +14,8 @@ def call(Map configmap) {
                         git config --local credential.helper "!f() { echo username=\\$GIT_USER; echo password=\\$GIT_TOKEN; }; f"
                         git config user.name $GIT_USER
                         git config user.password $GIT_TOKEN
-                        echo `git commit -a -m "pipeline commit"`
+                        git config --global user.email "sivathevan@gmail.com"
+                        echo `git commit -a  -m "pipeline commit"`
                         git push --set-upstream origin master
                         echo `git push`
                     """
